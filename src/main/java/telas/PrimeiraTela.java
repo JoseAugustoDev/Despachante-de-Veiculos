@@ -5,7 +5,6 @@
 package telas;
 
 import conexao.ConexaoDAO;
-import projetotelas.InOut;
 
 import javax.swing.*;
 import java.awt.*;

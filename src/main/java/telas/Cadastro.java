@@ -5,7 +5,6 @@
 package telas;
 
 import conexao.ConexaoDAO;
-import projetotelas.InOut;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

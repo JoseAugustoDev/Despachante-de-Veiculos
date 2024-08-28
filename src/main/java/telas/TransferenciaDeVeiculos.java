@@ -4,8 +4,6 @@
  */
 package telas;
 
-import projetotelas.InOut;
-
 /**
  *
  * @author 20231TPMI0244
