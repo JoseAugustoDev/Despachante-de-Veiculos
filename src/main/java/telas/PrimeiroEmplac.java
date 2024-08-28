@@ -5,11 +5,17 @@
 package telas;
 
 import conexao.ConexaoDAO;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.FileChooserUI;
 
 /**
@@ -70,6 +76,11 @@ public class PrimeiroEmplac extends javax.swing.JFrame {
         jLabel4.setText("DATA DA VENDA");
 
         jButton1.setText("ANEXAR NOTA FISCAL");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -180,7 +191,42 @@ public class PrimeiroEmplac extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        
+        JFileChooser fileChooser = new JFileChooser();
+
+        // Define o diretório inicial (opcional)
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
+        // Abre a caixa de diálogo para o usuário escolher um arquivo
+        int result = fileChooser.showOpenDialog(this);
+
+        // Verifica se o usuário selecionou um arquivo
+        if (result == JFileChooser.APPROVE_OPTION) {
+            // Obtém o arquivo selecionado
+            File selectedFile = fileChooser.getSelectedFile();
+
+            // Obtém o caminho do arquivo
+            String filePath = selectedFile.getAbsolutePath();
+
+            // Você pode realizar operações com o arquivo aqui
+            // Por exemplo, você pode exibir o caminho do arquivo em um componente de texto
+            JOptionPane.showMessageDialog(this, "Arquivo selecionado: " + filePath);
+
+            // Se precisar carregar o conteúdo do arquivo, você pode fazer isso aqui
+            // Por exemplo:
+            try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Processa o conteúdo do arquivo
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Erro ao ler o arquivo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // O usuário cancelou a seleção do arquivo
+            JOptionPane.showMessageDialog(this, "Nenhum arquivo selecionado.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -190,6 +236,7 @@ public class PrimeiroEmplac extends javax.swing.JFrame {
         Connection conn = conexao.conectaBD();
         if (conn != null) {
             String sql = "INSERT INTO emplacamento (modelo_veiculo, marca_veiculo, data_da_venda, nome_dono_veiculo) VALUES (?, ?, ?, ?);";
+            
             try {
                 PreparedStatement pstm = conn.prepareStatement(sql);
                 pstm.setString(1, jTextField1.getText());
@@ -237,6 +284,10 @@ public class PrimeiroEmplac extends javax.swing.JFrame {
         PrimeiroEmplac dataVenda = new PrimeiroEmplac();
         dataVenda.setVisible(true);
     }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
