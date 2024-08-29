@@ -4,11 +4,28 @@
  */
 package telas;
 
+import conexao.ConexaoDAO;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 20231TPMI0244
  */
 public class TransferenciaDeVeiculos extends javax.swing.JFrame {
+    
+    private String caminhoRecibo;
+    private String caminhoCompResidencia;
 
     /**
      * Creates new form TransferenciaDeVeiculos
@@ -30,14 +47,14 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         vistoria = new javax.swing.JCheckBox();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(750, 350));
@@ -79,6 +96,28 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
             }
         });
 
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#.###-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField1ActionPerformed(evt);
+            }
+        });
+
+        try {
+            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#.###-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,15 +133,15 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1))
-                        .addGap(30, 30, 30))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(vistoria)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(30, 30, 30))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -121,12 +160,12 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
                     .addComponent(vistoria))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
@@ -141,21 +180,101 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
+        int result = fileChooser.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            caminhoRecibo = selectedFile.getAbsolutePath(); // Armazena o caminho do arquivo
+
+            JOptionPane.showMessageDialog(this, "Arquivo selecionado: " + caminhoRecibo);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhum arquivo selecionado.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        InOut.MsgDeInforma( "Concluir " , " Transferência em processo!");
+        
+        ConexaoDAO conexao = new ConexaoDAO();
+        Connection conn = conexao.conectaBD();
+        
+        if (conn != null) {
+            String sql = "INSERT INTO transferencia (doc_antigo_dono, doc_novo_dono, recibo_preenchido, comprovante_residencia, vistoria_feita) VALUES (?, ?, ?, ?, ?);";
+            
+            try {
+                PreparedStatement pstm = conn.prepareStatement(sql);
+                pstm.setString(1, jFormattedTextField1.getText());
+                pstm.setString(2, jFormattedTextField2.getText());
+                pstm.setString(3, caminhoRecibo);
+                pstm.setString(4, caminhoCompResidencia);
+                pstm.setBoolean(5, vistoria.isSelected());
+
+                int quant_col_alterada = pstm.executeUpdate();
+                
+                if (quant_col_alterada > 0) {
+                    System.out.println("Transferencia cadastrada: ");
+                    Servicos tela_principal = new Servicos();
+                    tela_principal.setVisible(true);
+                    this.dispose();
+                } else {
+                    System.out.println("Erro no cadastro da Transferência.");
+                    InOut.MsgDeInforma("Emplacamento", "Erro no cadastro da Transferência! ");
+                }
+
+                pstm.close();
+                conn.close();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(PrimeiraTela.class.getName()).log(Level.SEVERE, "Erro durante a execução da query", ex);
+            }
+        } else {
+            System.out.println("Falha na conexão com o banco de dados.");
+        }
+        this.setVisible(false);
+                
+        InOut.MsgDeInforma( "Transferencia" , "Transferência cadastrada!");
         this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void vistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vistoriaActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_vistoriaActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
+        int result = fileChooser.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            caminhoCompResidencia = selectedFile.getAbsolutePath(); // Armazena o caminho do arquivo
+
+            JOptionPane.showMessageDialog(this, "Arquivo selecionado: " + caminhoCompResidencia);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhum arquivo selecionado.");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+        // TODO add your handling code here:
+        TransferenciaDeVeiculos doc_antigo = new TransferenciaDeVeiculos();
+        doc_antigo.setVisible(true);
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+
+    private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
+        // TODO add your handling code here:
+        TransferenciaDeVeiculos doc_antigo = new TransferenciaDeVeiculos();
+        doc_antigo.setVisible(true);
+    }//GEN-LAST:event_jFormattedTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,13 +316,13 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JCheckBox vistoria;
     // End of variables declaration//GEN-END:variables
 }
