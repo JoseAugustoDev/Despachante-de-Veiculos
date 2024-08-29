@@ -1,0 +1,3 @@
+Nosso projeto consiste no desenvolvimento de um sistema de gerenciamento para um despachante de veículos. Essa empresa, localizada na Serra, é especializada em serviços como registro e licenciamento de veículos, transferência de propriedade, regularização do veículo, entre outros. 
+Esse sistema permitirá ao despachante ter um maior controle sobre seus processos, além de trazer uma maior eficiência na realização das tarefas e organização dos documentos. 
+O setor de despachante de veículos é uma área de serviços especializados que auxilia proprietários de veículos na gestão e execução de processos burocráticos e administrativos relacionados a automóveis.
