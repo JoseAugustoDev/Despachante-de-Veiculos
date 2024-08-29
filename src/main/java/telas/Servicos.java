@@ -32,6 +32,7 @@ public class Servicos extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(750, 350));
 
         jLabel1.setText("SERVIÇOS");
 

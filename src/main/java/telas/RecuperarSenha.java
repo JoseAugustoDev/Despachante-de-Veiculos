@@ -32,6 +32,7 @@ public class RecuperarSenha extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(750, 350));
 
         jLabel1.setText("RECUPERAR SENHA");
 
@@ -87,7 +88,7 @@ public class RecuperarSenha extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        InOut.MsgDeInforma( " Código" , " Código enviado! ");
+        InOut.MsgDeInforma("Código" , " Código enviado!");
         this.setVisible(false);
         
     }//GEN-LAST:event_jButton1ActionPerformed

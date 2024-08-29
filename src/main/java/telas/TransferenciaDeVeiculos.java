@@ -40,6 +40,7 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
         vistoria = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocation(new java.awt.Point(750, 350));
 
         jLabel1.setText("RECIBO PREENCHIDO:");
 
