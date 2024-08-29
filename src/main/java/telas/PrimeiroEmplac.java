@@ -23,6 +23,13 @@ import javax.swing.plaf.FileChooserUI;
  * @author 20231TPMI0244
  */
 public class PrimeiroEmplac extends javax.swing.JFrame {
+    private int idProcesso;
+
+    public PrimeiroEmplac(int idProcesso) {
+        this.idProcesso = idProcesso;
+        initComponents();
+    }
+
     
     private String caminhoArquivo;
 
@@ -216,19 +223,21 @@ public class PrimeiroEmplac extends javax.swing.JFrame {
         
         ConexaoDAO conexao = new ConexaoDAO();
         Connection conn = conexao.conectaBD();
+
         if (conn != null) {
-            String sql = "INSERT INTO emplacamento (modelo_veiculo, marca_veiculo, data_da_venda, nome_dono_veiculo, nota_fiscal) VALUES (?, ?, ?, ?, ?);";
-            
+            String sql = "INSERT INTO emplacamento (id_processo, modelo_veiculo, marca_veiculo, data_da_venda, nome_dono_veiculo, nota_fiscal) VALUES (?, ?, ?, ?, ?, ?);";
+
             try {
                 PreparedStatement pstm = conn.prepareStatement(sql);
-                pstm.setString(1, jTextField1.getText());
-                pstm.setString(2, jTextField2.getText());
-                pstm.setString(3, jFormattedTextField1.getText());
-                pstm.setString(4, jTextField4.getText());
-                pstm.setString(5, caminhoArquivo);
+                pstm.setInt(1, idProcesso); // Usando o id_processo
+                pstm.setString(2, jTextField1.getText());
+                pstm.setString(3, jTextField2.getText());
+                pstm.setString(4, jFormattedTextField1.getText());
+                pstm.setString(5, jTextField4.getText());
+                pstm.setString(6, caminhoArquivo);
 
                 int quant_col_alterada = pstm.executeUpdate();
-                
+
                 if (quant_col_alterada > 0) {
                     System.out.println("Emplacamento cadastrado: " + jTextField1.getText());
                     Servicos tela_principal = new Servicos();
@@ -248,9 +257,9 @@ public class PrimeiroEmplac extends javax.swing.JFrame {
         } else {
             System.out.println("Falha na conexão com o banco de dados.");
         }
-        
+
         this.setVisible(false);
-        
+
         InOut.MsgDeInforma( "Cadastro " , "Emplacamento cadastrado com sucesso!");
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed

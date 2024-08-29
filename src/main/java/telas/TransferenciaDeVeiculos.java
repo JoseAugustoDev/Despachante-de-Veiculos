@@ -26,6 +26,14 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
     
     private String caminhoRecibo;
     private String caminhoCompResidencia;
+    
+    private int idProcesso;
+
+    public TransferenciaDeVeiculos(int idProcesso) {
+        this.idProcesso = idProcesso;
+        initComponents();
+    }
+
 
     /**
      * Creates new form TransferenciaDeVeiculos
@@ -204,15 +212,16 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
         Connection conn = conexao.conectaBD();
         
         if (conn != null) {
-            String sql = "INSERT INTO transferencia (doc_antigo_dono, doc_novo_dono, recibo_preenchido, comprovante_residencia, vistoria_feita) VALUES (?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO transferencia (id_processo, doc_antigo_dono, doc_novo_dono, recibo_preenchido, comprovante_residencia, vistoria_feita) VALUES (?, ?, ?, ?, ?, ?);";
             
             try {
                 PreparedStatement pstm = conn.prepareStatement(sql);
-                pstm.setString(1, jFormattedTextField1.getText());
-                pstm.setString(2, jFormattedTextField2.getText());
-                pstm.setString(3, caminhoRecibo);
-                pstm.setString(4, caminhoCompResidencia);
-                pstm.setBoolean(5, vistoria.isSelected());
+                pstm.setInt(1, idProcesso);
+                pstm.setString(2, jFormattedTextField1.getText());
+                pstm.setString(3, jFormattedTextField2.getText());
+                pstm.setString(4, caminhoRecibo);
+                pstm.setString(5, caminhoCompResidencia);
+                pstm.setBoolean(6, vistoria.isSelected());
 
                 int quant_col_alterada = pstm.executeUpdate();
                 
@@ -239,6 +248,7 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
                 
         InOut.MsgDeInforma( "Transferencia" , "Transferência cadastrada!");
         this.setVisible(false);
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void vistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vistoriaActionPerformed

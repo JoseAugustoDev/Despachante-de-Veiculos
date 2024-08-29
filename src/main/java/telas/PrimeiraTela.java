@@ -22,7 +22,6 @@ import java.util.logging.Logger;
  * @author 20231TPMI0244
  */
 public class PrimeiraTela extends JFrame {
-
     /**
      * Creates new form PrimeiraTela
      */
@@ -163,11 +162,12 @@ public class PrimeiraTela extends JFrame {
 
     private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-
+        
         ConexaoDAO conexao = new ConexaoDAO();
         Connection conn = conexao.conectaBD();
         if (conn != null) {
             String sql = "SELECT nome_completo FROM usuarios WHERE email=? AND senha=?";
+            
             try {
                 PreparedStatement pstm = conn.prepareStatement(sql);
                 pstm.setString(1, jTextField_email.getText());

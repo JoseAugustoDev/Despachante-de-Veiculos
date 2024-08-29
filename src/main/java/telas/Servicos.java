@@ -4,6 +4,16 @@
  */
 package telas;
 
+import conexao.ConexaoDAO;
+import dados.Usuario;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author 20231TPMI0244
@@ -92,15 +102,88 @@ public class Servicos extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        
-        PrimeiroEmplac primeiroEmplacamento= new PrimeiroEmplac();
-        primeiroEmplacamento.setVisible(true);
+  
+        ConexaoDAO conexao = new ConexaoDAO();
+        Connection conn = conexao.conectaBD();
+
+        if (conn != null) {
+            String sql = "INSERT INTO processos (servico) VALUES (?);";
+
+            try {
+                PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+                pstm.setString(1, "Emplacamento");
+
+                int quant_col_alterada = pstm.executeUpdate();
+
+                if (quant_col_alterada > 0) {
+                    ResultSet rs = pstm.getGeneratedKeys();
+                    if (rs.next()) {
+                        int lastId = rs.getInt(1); // Declare and initialize lastId here
+                        System.out.println("ID do último processo cadastrado: " + lastId);
+
+                        // Pass the lastId to PrimeiroEmplac
+                        PrimeiroEmplac emplacamento = new PrimeiroEmplac(lastId);
+                        emplacamento.setVisible(true);
+                        this.dispose();
+                    }
+                } else {
+                    System.out.println("Erro no cadastro do Processo.");
+                    InOut.MsgDeInforma("Emplacamento", "Erro no cadastro do Processo! ");
+                }
+
+                pstm.close();
+                conn.close();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Servicos.class.getName()).log(Level.SEVERE, "Erro durante a execução da query", ex);
+            }
+        } else {
+            System.out.println("Falha na conexão com o banco de dados.");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        TransferenciaDeVeiculos TransferenciadeVeiculos = new TransferenciaDeVeiculos();
-        TransferenciadeVeiculos.setVisible(true);
+        ConexaoDAO conexao = new ConexaoDAO();
+        Connection conn = conexao.conectaBD();
+
+        if (conn != null) {
+            String sql = "INSERT INTO processos (servico) VALUES (?);";
+
+            try {
+                PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+                pstm.setString(1, "Transferencia");
+
+                int quant_col_alterada = pstm.executeUpdate();
+
+                if (quant_col_alterada > 0) {
+                    ResultSet rs = pstm.getGeneratedKeys();
+                    if (rs.next()) {
+                        int lastId = rs.getInt(1); // Declare and initialize lastId here
+                        System.out.println("ID do último processo cadastrado: " + lastId);
+
+                        // Pass the lastId to PrimeiroEmplac
+                        TransferenciaDeVeiculos transferencia = new TransferenciaDeVeiculos(lastId);
+                        transferencia.setVisible(true);
+                        this.dispose();
+                    }
+                } else {
+                    System.out.println("Erro no cadastro do Processo.");
+                    InOut.MsgDeInforma("Transferencia", "Erro no cadastro do Processo! ");
+                }
+
+                pstm.close();
+                conn.close();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Servicos.class.getName()).log(Level.SEVERE, "Erro durante a execução da query", ex);
+            }
+        } else {
+            System.out.println("Falha na conexão com o banco de dados.");
+        }
+    
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
