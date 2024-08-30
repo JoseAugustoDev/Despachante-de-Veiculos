@@ -34,7 +34,7 @@ public class Processos extends javax.swing.JFrame {
         Connection conn = conexao.conectaBD();
 
         if (conn != null) {
-            String sql = "SELECT id_processo, 'Transferência' AS servico, modelo_veiculo FROM transferencia UNION SELECT id_processo, 'Emplacamento' AS servico, modelo_veiculo FROM emplacamento";
+            String sql = "SELECT id_processo, 'Transferencia' AS servico, modelo_veiculo FROM transferencia UNION SELECT id_processo, 'Emplacamento' AS servico, modelo_veiculo FROM emplacamento";
 
 
             try {
@@ -42,7 +42,7 @@ public class Processos extends javax.swing.JFrame {
                 ResultSet resultado = pstm.executeQuery();
 
                 DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                model.setNumRows(0); // Limpa a tabela antes de popular
+                model.setNumRows(0); 
 
                 while (resultado.next()) {
                     model.addRow(new Object[]{
@@ -168,14 +168,12 @@ public class Processos extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         
-        int selectedRow = jTable1.getSelectedRow(); // Obtém a linha selecionada
-
-        if (selectedRow != -1) { // Verifica se uma linha foi selecionada
-            int idProcesso = (int) jTable1.getValueAt(selectedRow, 0); // Obtém o ID do processo da primeira coluna
-            String servico = (String) jTable1.getValueAt(selectedRow, 1); // Obtém o tipo de serviço
-            String veiculo = (String) jTable1.getValueAt(selectedRow, 2); // Obtém o veículo
-
-            // Agora, você pode passar esses dados para a nova tela
+        int selectedRow = jTable1.getSelectedRow(); 
+        if (selectedRow != -1) { 
+            int idProcesso = (int) jTable1.getValueAt(selectedRow, 0); 
+            String servico = (String) jTable1.getValueAt(selectedRow, 1); 
+            String veiculo = (String) jTable1.getValueAt(selectedRow, 2);
+            
             InformacoesProcesso telaInfo = new InformacoesProcesso(idProcesso, servico, veiculo);
             telaInfo.setVisible(true);
         }

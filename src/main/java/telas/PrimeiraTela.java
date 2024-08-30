@@ -209,6 +209,7 @@ public class PrimeiraTela extends JFrame {
 
     private void jButton3ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         Cadastro cadastro = new Cadastro();
         cadastro.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
