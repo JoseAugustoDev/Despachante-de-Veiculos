@@ -294,7 +294,7 @@ public class TransferenciaDeVeiculos extends javax.swing.JFrame {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            caminhoCompResidencia = selectedFile.getAbsolutePath(); // Armazena o caminho do arquivo
+            caminhoCompResidencia = selectedFile.getAbsolutePath(); 
 
             JOptionPane.showMessageDialog(this, "Arquivo selecionado: " + caminhoCompResidencia);
 

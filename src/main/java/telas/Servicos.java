@@ -119,10 +119,9 @@ public class Servicos extends javax.swing.JFrame {
                 if (quant_col_alterada > 0) {
                     ResultSet rs = pstm.getGeneratedKeys();
                     if (rs.next()) {
-                        int lastId = rs.getInt(1); // Declare and initialize lastId here
+                        int lastId = rs.getInt(1); 
                         System.out.println("ID do último processo cadastrado: " + lastId);
 
-                        // Pass the lastId to PrimeiroEmplac
                         PrimeiroEmplac emplacamento = new PrimeiroEmplac(lastId);
                         emplacamento.setVisible(true);
                         this.dispose();
@@ -161,10 +160,9 @@ public class Servicos extends javax.swing.JFrame {
                 if (quant_col_alterada > 0) {
                     ResultSet rs = pstm.getGeneratedKeys();
                     if (rs.next()) {
-                        int lastId = rs.getInt(1); // Declare and initialize lastId here
+                        int lastId = rs.getInt(1); 
                         System.out.println("ID do último processo cadastrado: " + lastId);
 
-                        // Pass the lastId to PrimeiroEmplac
                         TransferenciaDeVeiculos transferencia = new TransferenciaDeVeiculos(lastId);
                         transferencia.setVisible(true);
                         this.dispose();
